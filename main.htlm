@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Rápida de SQL: Sintaxis y Cláusulas</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.5;
+            color: #1e293b;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #0f172a;
+            font-size: 22px;
+            margin: 0 0 6px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .subtitle {
+            color: #64748b;
+            font-size: 13px;
+            margin: 0;
+        }
+        pre {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 12px;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 12px;
+            color: #0f172a;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+        .clause-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #2563eb;
+            border-radius: 4px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            page-break-inside: avoid;
+        }
+        .clause-title {
+            font-weight: bold;
+            color: #1e40af;
+            font-size: 14px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+        }
+        .clause-num {
+            background-color: #dbeafe;
+            color: #1e40af;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            margin-right: 8px;
+        }
+        .clause-desc {
+            font-size: 12px;
+            color: #334155;
+            margin: 0;
+        }
+        .clause-desc u {
+            text-decoration-color: #94a3b8;
+        }
+        .note-box {
+            background-color: #fffbeb;
+            border: 1px solid #fef3c7;
+            border-left: 4px solid #d97706;
+            border-radius: 4px;
+            padding: 12px;
+            margin-top: 20px;
+            page-break-inside: avoid;
+        }
+        .note-title {
+            font-weight: bold;
+            color: #92400e;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+        .note-text {
+            font-size: 11.5px;
+            color: #78350f;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Guía de Orden de Escritura en SQL</h1>
+        <p class="subtitle">Estructura secuencial de código y propósito de cada cláusula</p>
+    </div>
+
+    <pre><code><span style="color: #0284c7;">WITH</span> ...                      <span style="color: #64748b;">-- 1. Tablas temporales de apoyo (opcional)</span>
+<span style="color: #0284c7;">SELECT</span> [DISTINCT] ...         <span style="color: #64748b;">-- 2. Columnas y cálculos a proyectar</span>
+<span style="color: #0284c7;">FROM</span> ...                      <span style="color: #64748b;">-- 3. Tabla origen principal</span>
+  <span style="color: #0284c7;">JOIN</span> ... <span style="color: #0284c7;">ON</span> ...             <span style="color: #64748b;">-- 4. Tablas secundarias a relacionar (opcional)</span>
+<span style="color: #0284c7;">WHERE</span> ...                     <span style="color: #64748b;">-- 5. Filtros sobre filas individuales (opcional)</span>
+<span style="color: #0284c7;">GROUP BY</span> ...                  <span style="color: #64748b;">-- 6. Agrupamiento por categorías (opcional)</span>
+<span style="color: #0284c7;">HAVING</span> ...                    <span style="color: #64748b;">-- 7. Filtros sobre los grupos o agregaciones (opcional)</span>
+<span style="color: #0284c7;">UNION</span> / <span style="color: #0284c7;">INTERSECT</span> / <span style="color: #0284c7;">EXCEPT</span>    <span style="color: #64748b;">-- 8. Combinación con otras consultas (opcional)</span>
+<span style="color: #0284c7;">ORDER BY</span> ...                  <span style="color: #64748b;">-- 9. Ordenamiento del resultado (opcional)</span>
+<span style="color: #0284c7;">LIMIT</span> ... <span style="color: #0284c7;">OFFSET</span> ...;         <span style="color: #64748b;">-- 10. Límite de filas y paginación (opcional)</span></code></pre>
+
+    <div class="clause-card">
+        <div class="clause-title"><span class="clause-num">1</span> WITH (Common Table Expression - CTE)</div>
+        <p class="clause-desc">Crea tablas temporales con nombre al inicio de la consulta para simplificar y modularizar código complejo en lugar de anidar subconsultas.</p>
+    </div>
+
+    <div class="clause-card">
+        <div class="clause-title"><span class="clause-num">2</span> SELECT & DISTINCT</div>
+        <p class="clause-desc">Especifica qué columnas, operaciones o agregaciones deben proyectarse en el resultado. <strong>DISTINCT</strong> elimina filas completamente duplicadas de la salida.</p>
+    </div>
+
+    <div class="clause-card">
+        <div class="clause-title"><span class="clause-num">3</span> FROM</div>
+        <p class="clause-desc">Indica la tabla física, vista o subconsulta principal desde la cual se extraerán los datos.</p>
+    </div>
+
+    <div class="clause-card">
+        <div class="clause-title"><span class="clause-num">4</span> JOIN ... ON</div>
+        <p class="clause-desc">Vincula la tabla del <code>FROM</code> con tablas secundarias mediante condiciones de enlace. <strong>INNER JOIN</strong> exige coincidencia en ambas tablas; <strong>LEFT JOIN</strong> conserva todas las filas de la tabla izquierda aunque no tengan relación en la derecha (rellenando con NULL).</p>
+    </div>
+
+    <div class="clause-card">
+        <div class="clause-title"><span class="clause-num">5</span> WHERE</div>
+        <p class="clause-desc">Aplica condiciones lógicas para filtrar filas individuales <i>antes</i> de realizar cualquier agrupamiento o agregación (usa <code>=</code>, <code>&lt;&gt;</code>, <code>IN</code>, <code>BETWEEN</code>, <code>LIKE</code>, <code>IS NULL</code>).</p>
+    </div>
+
+    <div class="clause-card">
+        <div class="clause-title"><span class="clause-num">6</span> GROUP BY</div>
+        <p class="clause-desc">Agrupa las filas resultantes en categorías para aplicar cálculos grupales (<code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>). Toda columna en <code>SELECT</code> fuera de una función agregada debe ir aquí.</p>
+    </div>
+
+    <div class="clause-card">
+        <div class="clause-title"><span class="clause-num">7</span> HAVING</div>
+        <p class="clause-desc">Filtra los <i>grupos</i> generados por el <code>GROUP BY</code> evaluando condiciones sobre funciones de agregación (ej. <code>HAVING COUNT(*) &gt; 5</code>).</p>
+    </div>
+
+    <div class="clause-card">
+        <div class="clause-title"><span class="clause-num">8</span> UNION / INTERSECT / EXCEPT</div>
+        <p class="clause-desc">Combina (<code>UNION</code>), busca coincidencias (<code>INTERSECT</code>) o calcula diferencias (<code>EXCEPT</code>) entre los resultados de dos consultas independientes con la misma estructura.</p>
+    </div>
+
+    <div class="clause-card">
+        <div class="clause-title"><span class="clause-num">9</span> ORDER BY</div>
+        <p class="clause-desc">Ordena el resultado final de la consulta de forma ascendente (<code>ASC</code>) o descendente (<code>DESC</code>) según las columnas especificadas.</p>
+    </div>
+
+    <div class="clause-card">
+        <div class="clause-title"><span class="clause-num">10</span> LIMIT & OFFSET</div>
+        <p class="clause-desc"><strong>LIMIT n</strong> restringe el total de filas retornadas a un máximo de <i>n</i>. <strong>OFFSET m</strong> omite las primeras <i>m</i> filas antes de entregar los datos (útil para paginación).</p>
+    </div>
+
+    <div class="note-box">
+        <div class="note-title">Diferencia con el Orden de Ejecución Interno</div>
+        <p class="note-text">Aunque el código se <b>escribe</b> empezando por <code>SELECT</code>, el motor SQL lo <b>ejecuta</b> internamente en este orden: <code>FROM/JOIN</code> &rarr; <code>WHERE</code> &rarr; <code>GROUP BY</code> &rarr; <code>HAVING</code> &rarr; <code>SELECT</code> &rarr; <code>DISTINCT</code> &rarr; <code>ORDER BY</code> &rarr; <code>LIMIT</code>. Por este motivo, no puedes usar alias creados en el <code>SELECT</code> dentro del <code>WHERE</code>.</p>
+    </div>
+
+</body>
+</html>
